@@ -23,12 +23,12 @@ const (
 	TerraformDir   = "../terraform"
 	FlatcarChannel = "stable"
 	FlatcarRelease = "2512.5.0"
-	SshPublicKey   = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCqdydpJuvjZXcBj5DeK3+tvGRJd4YxJSN6FZ+qVlxBNH/m22gxbO+ktdCq+M3/6M4hTS24M+UqHlVfiuIp1IGDh6a7EGMCbojr5KGNq7xUpi1Y+D+y5/t4PPL1FngjkrkQ67smI7gmcLhVuvq8h2IjEtMpXf9A8ACTKsAqKaMz0PU/FQSwUv6+Em5a0Zfn6pkfaAL3VT7hrZMFm7Sw66zfj6UgC5fOLZ2VyHR9TdrBXS0QQbv2Ip29cUkJGQgYCnrrdqdpWPmv0sUNP4bjsO+4nWRP8U80F1ayTyjethxXMsyGgLv5rMePAD8lNIsaBvBb1gvIDDKjGOtiyxRZBpfvNMG5rcyN2y3PgSORxIi4y0Z0yU+A8mJ536+LaGUgIMsf6Hc3WJX2YzcNsW5emcZAcSM2GZu/a05Siqy4zCNu6nxC+Zzhm7IV5vibpJ687zdcCpcf4SbmnRZDqPk+Se6Gjt+XpSzdaY0lFt99QvlGj0/tFDZeIwlivP28m8zAVXGtwgKpWe5MNGxawIlHKPNGJ0Q+tAknJCHKt5Q1x/9bWlz//1rXiBeLmXpYizQfxnlhxilqwdgA5sXqESLIuzqhgQTVyBGTw7YPjP7sZR9pEuoFnm35ROmxie4GCcP9xkUe9cwtAuIPmU1YPEJB8OK05TsDSxIXAe2Lgn5pbJqw3w=="
+	SshPublicKey   = "PUBLIC_SSH_KEY"
 )
 
 func TestShouldStartEKSCorrectly(t *testing.T) {
 	workDir := filepath.Join(TerraformDir, ".terraform", "test_structure")
-	defer test_structure.CleanupTestData(t, workDir)
+	defer test_structure.CleanupTestDataFolder(t, workDir)
 
 	defer test_structure.RunTestStage(t, "undeploy", func() {
 		undeployTerraform(t, workDir)
