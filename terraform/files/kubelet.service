@@ -1,0 +1,29 @@
+[Unit]
+Description=Kubelet
+Wants=docker.service
+Wants=coreos-metadata.service
+Requires=coreos-metadata.service
+Requires=docker.service
+After=docker.service
+
+[Service]
+EnvironmentFile=/run/metadata/flatcar
+ExecStartPre=/scripts/download-kubelet.sh
+ExecStartPre=/sbin/iptables -P FORWARD ACCEPT -w 5
+
+ExecStart=/data/kubelet/kubelet \
+    --cloud-provider=aws \
+    --cni-bin-dir=/opt/cni/bin \
+    --cni-conf-dir=/etc/cni/net.d \
+    --config=/etc/kubernetes/kubelet-conf.yaml \
+    --kubeconfig=/etc/kubernetes/kubelet-kubeconfig \
+    --network-plugin=cni \
+    --container-runtime=docker \
+    --node-ip ${COREOS_EC2_IPV4_LOCAL} \
+    --hostname-override ${COREOS_EC2_HOSTNAME}
+
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
